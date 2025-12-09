@@ -1,66 +1,52 @@
-import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { Montserrat, Playfair_Display } from "next/font/google"
-import "./globals.css"
+import type { Metadata } from "next";
+import { Montserrat, Playfair_Display } from "next/font/google";
+import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
-/* 
-  =============================================
-  FONTS CONFIGURATION - Change fonts here
-  =============================================
-  Currently using:
-  - Montserrat: Clean, modern sans-serif for body text
-  - Playfair Display: Elegant serif for headings
-  
-  To change fonts, replace the imports above.
-  Google Fonts alternatives: Open Sans, Roboto, Lato, Merriweather
-*/
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
-})
+});
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
-})
+});
 
 export const metadata: Metadata = {
-  title: "Prime Locations | Find Your Next Business Location",
-  description:
-    "Expert commercial real estate services to help you find the perfect business location. Professional guidance for retail spaces, offices, and commercial properties.",
-  keywords: ["commercial real estate", "business location", "retail space", "office space", "commercial property"],
-  generator: "v0.app",
-  icons: {
-    icon: [
-      { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
-      { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
-    apple: "/apple-icon.png",
-  },
-  openGraph: {
-    title: "Prime Locations | Find Your Next Business Location",
-    description: "Expert commercial real estate services to help you find the perfect business location.",
-    type: "website",
-  },
-}
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#c4703e",
-}
+  title: "DGrealtor | Real Estate Excellence",
+  description: "Expert Commercial Real Estate Services in Maharashtra",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <link 
+          rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        />
+      </head>
+      <body
+        className={`${montserrat.variable} ${playfair.variable} font-sans antialiased text-foreground bg-background selection:bg-[#c5a059] selection:text-white flex flex-col min-h-screen`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
+      </body>
     </html>
-  )
+  );
 }
